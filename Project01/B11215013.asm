@@ -63,11 +63,11 @@ TerminateProcess:
 	syscall         # Exit
 
 printDescription:
-	la $a0, dot
-	jal print
+	la $a0, dot        # Print dot and newline
+	jal print          # Call func
 
-	la $a0, description
-	jal print
+	la $a0, description # Print description text
+	jal print           # Call func
 	
 	la $t0, gradesDesc # Load gradesDesc Base
 	li $t3, 0x4        # Let index become offset
@@ -75,10 +75,10 @@ printDescription:
 	mflo $t1           # Get RVA
 	add $t0, $t0, $t1  # Get gradesDesc VMA
 	lw $a0, 0($t0)     # Load score from array
-	jal print
+	jal print          # Call func
 	
 	nop
-	j TerminateProcess
+	j TerminateProcess # TerminateProcess
 
 printPlus: # print("+")
 	la $a0, plus
@@ -127,14 +127,14 @@ print: # print()
 	jr $ra         # Return
 
 specialCase:
-	la $a0, grade
-	jal print
-	move $a0, $t1
-	jal print
-	la $a0, dot
-	jal print
-	la $a0, description
-	jal print
-	move $a0, $t2
-	jal print
-	j TerminateProcess
+	la $a0, grade       # Print grade text
+	jal print           # Call func
+	move $a0, $t1       # Print bad text
+	jal print           # Call func
+	la $a0, dot         # Print dot and newline
+	jal print           # Call func
+	la $a0, description # Print description text
+	jal print           # Call func
+	move $a0, $t2       # Print grade description
+	jal print           # Call func
+	j TerminateProcess  # TerminateProcess
